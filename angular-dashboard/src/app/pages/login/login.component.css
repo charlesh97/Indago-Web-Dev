@@ -1,0 +1,23 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;    
+}
+
+.white-text {
+    color: #ffffff
+}
+
+.mask {
+    background: rgba(59, 59, 59, 0.8);
+    overflow: auto;
+    height: 100%;
+    z-index: 2;
+}
+
+#content {
+    background: url(../../../assets/login_background.jpg) 0 0 no-repeat fixed;
+    overflow: auto;
+    height: 100%;
+    color: #ffffff
+}

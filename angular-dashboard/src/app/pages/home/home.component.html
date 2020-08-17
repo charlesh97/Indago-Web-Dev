@@ -1,0 +1,158 @@
+<div fxLayout="row" fxLayoutAlign="flex-start" fxLayoutGap="20px" class="content">
+    <div fxFlex="25">
+        <mat-card class="card"> 
+            <mat-card-title>Welcome, Chris</mat-card-title>
+            <mat-card-subtitle>chris.jones@gmail.com</mat-card-subtitle>
+            <h1>Your Devices</h1> 
+            <mat-form-field>
+                <mat-label>Select Device</mat-label>
+                <mat-select (selectionChange)="deviceChanged($event)">
+                    <mat-option value="{{item}}" *ngFor="let item of (user | async)?.authDeviceList">
+                        {{item}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-divider></mat-divider>
+
+            <div class="listItem" fxLayout="column" fxLayoutAlign="flex-start">
+                <h5 class="light listTitle">NICKNAME</h5>
+                <h2 class="light listInfo" style="visibility: {{readyToDisplay ? 'visible' : 'collapse' }};">{{ (device | async)?.nickname }}</h2>
+                <mat-divider></mat-divider>
+            </div>
+
+            <div class="listItem" fxLayout="column" fxLayoutAlign="flex-start">
+                <h5 class="light listTitle">SERIAL NUMBER</h5>
+                <h2 class="light listInfo" style="visibility: {{readyToDisplay ? 'visible' : 'collapse' }};">{{ (device | async)?.serialnumber }}</h2>
+                <mat-divider></mat-divider>
+            </div>
+
+            <div class="listItem" fxLayout="column" fxLayoutAlign="flex-start">
+                <h5 class="light listTitle">LINKED PHONE</h5>
+                <h2 class="light listInfo" style="visibility: {{readyToDisplay ? 'visible' : 'collapse' }};">{{ (device | async)?.linkedphone }}</h2>
+                <mat-divider></mat-divider>
+            </div>
+
+            <div class="listItem" fxLayout="column" fxLayoutAlign="flex-start">
+                <h5 class="light listTitle">LAST SEEN</h5>
+                <h2 class="light listInfo" style="visibility: {{readyToDisplay ? 'visible' : 'collapse' }};">{{ (device | async)?.lastseen }}mins</h2>
+                <mat-divider></mat-divider>
+            </div>
+
+            <div class="listItem" fxLayout="column" fxLayoutAlign="flex-start">
+                <h5 class="light listTitle">BATTERY LIFE</h5>
+                <h2 class="light listInfo" style="visibility: {{readyToDisplay ? 'visible' : 'collapse' }};">{{ (device | async)?.batterylife * 100 }}%</h2>
+                <mat-divider></mat-divider>
+            </div>
+            
+            <div class="listItem" fxLayout="column" fxLayoutAlign="flex-start">
+                <h5 class="light listTitle">TIME BEFORE CHARGE</h5>
+                <h2 class="light listInfo" style="visibility: {{readyToDisplay ? 'visible' : 'collapse' }};">{{ (device | async)?.timetocharge }}</h2>
+                <mat-divider></mat-divider>
+            </div>
+
+            <br>
+            <div fxLayout="column" fxAlign="center center">
+                <button mat-raised-button color="primary" style="margin: 10px;">
+                    <mat-icon>add</mat-icon>
+                    Register Device
+                </button>
+    
+                <button mat-raised-button color="warn" style="margin: 10px;" [disabled]="!readyToDisplay">
+                    <mat-icon>delete</mat-icon>
+                    Delete Device
+                </button>
+            </div>
+        </mat-card>
+    </div>
+
+    <div fxFlex="30">
+        <mat-card class="card">
+            <mat-card-title>Device Settings</mat-card-title>
+            <mat-card-content>
+                <div class="listItem" fxLayout="row" fxLayoutAlign="start center">
+                    <h3 class="light listInfo">Tracking Enable</h3>
+                    <mat-slide-toggle fxLayoutAlign="flex-end" (change)="trackingEnableToggle($event)" [disabled]="!readyToDisplay"></mat-slide-toggle>
+                </div>
+                <mat-divider></mat-divider>
+
+                <div class="listItem" fxLayout="row" fxLayoutAlign="start center">
+                    <h3 fxLayoutAlign="flex-start" class="light listInfo">Bluetooth Enable</h3>
+                    <mat-slide-toggle fxLayoutAlign="flex-end" [checked]="bleEnable" (change)="bleEnableToggle($event)" [disabled]="!readyToDisplay"></mat-slide-toggle>
+                </div>
+                <mat-divider></mat-divider>
+
+                <div class="listItem" fxLayout="row" fxLayoutAlign="start center">
+                    <h3 fxLayoutAlign="flex-start" class="light listInfo">Low Power Mode</h3>
+                    <mat-slide-toggle fxLayoutAlign="flex-end" [checked]="lowPowerEnable" (change)="lowPowerToggle($event)" [disabled]="!readyToDisplay"></mat-slide-toggle>
+                </div>
+                <mat-divider></mat-divider>
+
+                <div class="listItem" fxLayout="row" fxLayoutAlign="start center">
+                    <h3 fxLayoutAlign="flex-start" class="light listInfo">GPS Tracking Period</h3>
+                    <mat-form-field fxLayoutAlign="flex-end">
+                        <mat-label>Tracking Period</mat-label>
+                        <mat-select (selectionChange)="trackingPeriodChange($event)" [disabled]="!readyToDisplay">
+                            <mat-option value="1">1s</mat-option>
+                            <mat-option value="2">10s</mat-option>
+                            <mat-option value="3">30s</mat-option>
+                            <mat-option value="4">1min</mat-option>
+                            <mat-option value="5">5min</mat-option>
+                            <mat-option value="6">15min</mat-option>
+                            <mat-option value="7">30min</mat-option>
+                            <mat-option value="8">1hr</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <mat-divider></mat-divider>
+
+                <div class="listItem" fxLayout="row" fxLayoutAlign="start center">
+                    <h3 fxLayoutAlign="flex-start" class="light listInfo">Data Upload Frequency</h3>
+                    <mat-form-field fxLayoutAlign="flex-end">
+                        <mat-label>Upload Period</mat-label>
+                        <mat-select (selectionChange)="uploadPeriodChange($event)" [disabled]="!readyToDisplay">
+                            <mat-option value="1">Immediately</mat-option>
+                            <mat-option value="2">30s</mat-option>
+                            <mat-option value="3">1min</mat-option>
+                            <mat-option value="4">5min</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <mat-divider></mat-divider>
+
+                <div fxLayout="column" fxAlign="center center" style="margin-top: 20px;">
+                    <button mat-raised-button color="accent" style="margin: 10px;" [disabled]="!readyToDisplay">
+                        <mat-icon>refresh</mat-icon>
+                        Refresh Device
+                    </button>
+        
+                    <button mat-raised-button color="warn" style="margin: 10px;" [disabled]="!readyToDisplay">
+                        <mat-icon>power_off</mat-icon>
+                        Emergency Shutdown
+                    </button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+
+    <div fxFlex="45">
+        <mat-card class="card">
+            <mat-card-title>Live Track View</mat-card-title>
+            <mat-card-content>
+                <google-map height="400px" width="600px"
+                            [center]="center"
+                            [zoom]="zoom" style="visibility: {{readyToDisplay ? 'visible' : 'collapse' }};">
+                    <map-marker #marker
+                                *ngFor="let markerPosition of markerPositions"
+                                [position]="markerPosition"
+                                [options]="markerOptions"
+                                (mapClick)="openInfoWindow(marker)"></map-marker>
+                    <map-info-window>Info Window content</map-info-window>
+                </google-map>
+                <div style="visibility: {{readyToDisplay ? 'visible' : 'collapse' }};">Latitude: {{center?.lat}}</div>
+                <div style="visibility: {{readyToDisplay ? 'visible' : 'collapse' }};">Longitude: {{center?.lng}}</div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+

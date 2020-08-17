@@ -1,0 +1,10 @@
+<div id="content">
+    <div class="mask">
+        <div fxLayout="column" fxLayoutAlign="center center" style="margin: 20px;">
+            <img src="../../../assets/indago.png" style="max-width: 10%; height: auto;"/>
+            <h3 style="font-weight: 100;">AI Powered Asset Tracking</h3>
+            <h3>{{test.testParam}}</h3>
+            <ngx-auth-firebaseui [providers]="[providers.Google, providers.Facebook, providers.Twitter]" (onSuccess)="loginSuccess($event)"></ngx-auth-firebaseui>
+        </div>
+    </div>
+</div>

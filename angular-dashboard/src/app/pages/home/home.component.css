@@ -1,0 +1,33 @@
+:host {
+    display: flex;
+    flex-direction: column;  
+    overflow: auto;
+}
+
+.content{
+    padding: 20px;
+}
+
+.light{
+    font-weight: lighter;
+}
+
+.listItem{
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.listTitle{
+    color: #BBBBBB;
+    margin: 10px 0px 0px 0px;
+}
+
+.listInfo{
+    margin: 0px 0px 0px 0px;
+    flex-grow: 4;
+}
+
+.card{
+    margin-bottom: 20px;
+    min-height: 75%;
+}
